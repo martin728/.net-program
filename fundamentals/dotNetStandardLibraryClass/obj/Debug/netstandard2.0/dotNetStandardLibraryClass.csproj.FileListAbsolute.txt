@@ -1,0 +1,10 @@
+C:\Users\diana\dotnet-program\fundamentals\dotNetStandardLibraryClass\bin\Debug\netstandard2.0\dotNetStandardLibraryClass.deps.json
+C:\Users\diana\dotnet-program\fundamentals\dotNetStandardLibraryClass\bin\Debug\netstandard2.0\dotNetStandardLibraryClass.dll
+C:\Users\diana\dotnet-program\fundamentals\dotNetStandardLibraryClass\bin\Debug\netstandard2.0\dotNetStandardLibraryClass.pdb
+C:\Users\diana\dotnet-program\fundamentals\dotNetStandardLibraryClass\obj\Debug\netstandard2.0\dotNetStandardLibraryClass.csproj.AssemblyReference.cache
+C:\Users\diana\dotnet-program\fundamentals\dotNetStandardLibraryClass\obj\Debug\netstandard2.0\dotNetStandardLibraryClass.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\diana\dotnet-program\fundamentals\dotNetStandardLibraryClass\obj\Debug\netstandard2.0\dotNetStandardLibraryClass.AssemblyInfoInputs.cache
+C:\Users\diana\dotnet-program\fundamentals\dotNetStandardLibraryClass\obj\Debug\netstandard2.0\dotNetStandardLibraryClass.AssemblyInfo.cs
+C:\Users\diana\dotnet-program\fundamentals\dotNetStandardLibraryClass\obj\Debug\netstandard2.0\dotNetStandardLibraryClass.csproj.CoreCompileInputs.cache
+C:\Users\diana\dotnet-program\fundamentals\dotNetStandardLibraryClass\obj\Debug\netstandard2.0\dotNetStandardLibraryClass.dll
+C:\Users\diana\dotnet-program\fundamentals\dotNetStandardLibraryClass\obj\Debug\netstandard2.0\dotNetStandardLibraryClass.pdb
