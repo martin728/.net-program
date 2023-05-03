@@ -1,0 +1,10 @@
+/Users/Diana_Martyn/Downloads/Debugging Fundamentals/Task1/bin/Debug/netcoreapp3.1/Task1.deps.json
+/Users/Diana_Martyn/Downloads/Debugging Fundamentals/Task1/bin/Debug/netcoreapp3.1/Task1.dll
+/Users/Diana_Martyn/Downloads/Debugging Fundamentals/Task1/bin/Debug/netcoreapp3.1/Task1.pdb
+/Users/Diana_Martyn/Downloads/Debugging Fundamentals/Task1/obj/Debug/netcoreapp3.1/Task1.csproj.AssemblyReference.cache
+/Users/Diana_Martyn/Downloads/Debugging Fundamentals/Task1/obj/Debug/netcoreapp3.1/Task1.GeneratedMSBuildEditorConfig.editorconfig
+/Users/Diana_Martyn/Downloads/Debugging Fundamentals/Task1/obj/Debug/netcoreapp3.1/Task1.AssemblyInfoInputs.cache
+/Users/Diana_Martyn/Downloads/Debugging Fundamentals/Task1/obj/Debug/netcoreapp3.1/Task1.AssemblyInfo.cs
+/Users/Diana_Martyn/Downloads/Debugging Fundamentals/Task1/obj/Debug/netcoreapp3.1/Task1.csproj.CoreCompileInputs.cache
+/Users/Diana_Martyn/Downloads/Debugging Fundamentals/Task1/obj/Debug/netcoreapp3.1/Task1.dll
+/Users/Diana_Martyn/Downloads/Debugging Fundamentals/Task1/obj/Debug/netcoreapp3.1/Task1.pdb
