@@ -11,9 +11,15 @@
         public string Name { get; set; }
 
         public double Price { get; set; }
+
         public override bool Equals(object obj)
-        {
-            return Name.Equals((obj as Product).Name) && Price.Equals((obj as Product).Price);
-        }
+                {
+                    if ((obj as Product) is null)
+                    {
+                        return false;
+                    }
+
+                    return Name.Equals((obj as Product).Name) && Price.Equals((obj as Product).Price);
+                }
     }
 }
