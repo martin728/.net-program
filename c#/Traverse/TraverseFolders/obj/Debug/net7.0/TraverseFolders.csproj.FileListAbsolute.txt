@@ -1,0 +1,15 @@
+/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/bin/Debug/net7.0/TraverseFolders
+/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/bin/Debug/net7.0/TraverseFolders.deps.json
+/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/bin/Debug/net7.0/TraverseFolders.runtimeconfig.json
+/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/bin/Debug/net7.0/TraverseFolders.dll
+/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/bin/Debug/net7.0/TraverseFolders.pdb
+/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/obj/Debug/net7.0/TraverseFolders.csproj.AssemblyReference.cache
+/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/obj/Debug/net7.0/TraverseFolders.GeneratedMSBuildEditorConfig.editorconfig
+/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/obj/Debug/net7.0/TraverseFolders.AssemblyInfoInputs.cache
+/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/obj/Debug/net7.0/TraverseFolders.AssemblyInfo.cs
+/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/obj/Debug/net7.0/TraverseFolders.csproj.CoreCompileInputs.cache
+/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/obj/Debug/net7.0/TraverseFolders.dll
+/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/obj/Debug/net7.0/refint/TraverseFolders.dll
+/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/obj/Debug/net7.0/TraverseFolders.pdb
+/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/obj/Debug/net7.0/TraverseFolders.genruntimeconfig.cache
+/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/obj/Debug/net7.0/ref/TraverseFolders.dll

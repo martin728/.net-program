@@ -1,0 +1,65 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/TraverseFolders.csproj": {}
+  },
+  "projects": {
+    "/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/TraverseFolders.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/TraverseFolders.csproj",
+        "projectName": "TraverseFolders",
+        "projectPath": "/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/TraverseFolders.csproj",
+        "packagesPath": "/Users/Diana_Martyn/.nuget/packages/",
+        "outputPath": "/Users/Diana_Martyn/Projects/net-program/c#/Traverse/TraverseFolders/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/Diana_Martyn/NuGet.Config",
+          "/Users/Diana_Martyn/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://artifacts.ipreo.com/api/nuget/v3/nuget": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.103/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
