@@ -7,7 +7,7 @@ namespace Traversing
         static void Main(string[] args)
         {
             var visitor = new FileSystemVisitor("../../../../testFolder");
-            var visitor2 = new FileSystemVisitor("../../../../testFolder",FilterByName);
+            var visitor2 = new FileSystemVisitor("../../../../testFolder",FilterByCsExtension);
             Console.WriteLine("===== Result from first visitor ======");
             foreach (var file in visitor.Explore("../../../../testFolder"))
             {
@@ -19,9 +19,9 @@ namespace Traversing
                 Console.WriteLine(file);
             }
         }
-        static bool FilterByName(string filename,string filterString = "cs")
+        static bool FilterByCsExtension(string filename)
         {
-            return filename.Contains(filterString);
+            return filename.Contains("cs");
         }
     }
 

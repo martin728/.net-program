@@ -1,4 +1,4 @@
-public delegate bool ReturnedDelegate(string filename, string filterString);
+public delegate bool ReturnedDelegate(string filename);
 class FileSystemVisitor
 {
     public readonly string Path;
@@ -6,7 +6,7 @@ class FileSystemVisitor
     public FileSystemVisitor(string filename)
     {
         Path = filename;
-        filterFunc = (_, _) => true;
+        filterFunc = (_) => true;
     }
 
     public FileSystemVisitor(string filename, ReturnedDelegate delegat)
@@ -18,7 +18,7 @@ class FileSystemVisitor
     {
         foreach (var entry in Directory.EnumerateFileSystemEntries(path))
         {
-            if (filterFunc(entry,"txt"))
+            if (filterFunc(entry))
             {
                 yield return entry;
             }
@@ -27,7 +27,15 @@ class FileSystemVisitor
         
         foreach (var subDir in Directory.EnumerateDirectories(path))
         {
-            Console.WriteLine(subDir);
+            if (filterFunc(subDir))
+            {
+                yield return subDir;
+            }
+            else
+            {
+                continue;
+            }
+            
             foreach (var entry in Explore(subDir))
             {
                 yield return entry;
