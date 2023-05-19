@@ -24,26 +24,35 @@ namespace Traversing
                 Console.WriteLine(file);
             }
             */
-            var visitor3 = new FileSystemVisitor("../../../../testFolder",FilterByCsExtension,ShowStartMessage,ShowFinishMessage,FileFoundEvent);
-            
+            var visitor3 = new FileSystemVisitor("../../../../testFolder",FilterByCsExtension);
+            visitor3.OnStart += ShowStartMessage;
+            visitor3.OnFinish += ShowFinishMessage;
+            visitor3.OnFileFound += FileFoundEvent;
+            visitor3.OnFolderExclude += FileExcludeEvent;
             foreach (var file in visitor3.Explore("../../../../testFolder"))
             {
                 Console.WriteLine(file);
             }
         }
 
-        static bool FileFoundEvent(string file,CustomEventArgs args)
+        static void FileFoundEvent(string file,CustomEventArgs args)
         {
             var abortionFile = "../../../../testFolder/file1.cs";
-            var e = new CustomEventArgs();
             if (file == abortionFile)
             {
                 Console.WriteLine("File:" + file + " found. Abortion...");
-                e.AllowAbort = true;
+                args.AllowAbort = true;
             }
-            return e.AllowAbort;
         }
-        
+        static void FileExcludeEvent(string file,CustomEventArgs args)
+        {
+            var excludeFolder = "../../../../testFolder/testFolder1cs";
+            if (file == excludeFolder)
+            {
+                Console.WriteLine("File:" + file + " found. Exclusion...Folder skipped");
+                args.AllowExclude = true;
+            }
+        }
         /*static void DirectoryFoundEvent(string dir,CustomEventArgs args)
         {
             var abortionFile = "../../../../testFolder/testFolder1cs";
