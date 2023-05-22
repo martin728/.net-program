@@ -1,72 +1,86 @@
-public delegate bool ReturnedDelegate(string filename, string extention);
-
+public delegate bool FilterFunctionDelegate(string name);
+public delegate void Notify();
+public delegate void FindFolderDelegate(string filename,CustomEventArgs eventArgs);
 class FileSystemVisitor
 {
-    public FileSystemVisitor(string filename)
+    private readonly string _path;
+    private readonly FilterFunctionDelegate _filterFunc;
+
+    public event Notify? OnStart;
+    public event Notify? OnFinish;
+    public event FindFolderDelegate? OnFileFound;
+    public event FindFolderDelegate? OnFilteredFileFound;
+    public event FindFolderDelegate? OnDirectoryFound;
+    public event FindFolderDelegate? OnFilteredDirectoryFound;
+
+    public FileSystemVisitor(string path)
     {
-        foreach (string file in Explore(filename)) {
-            Console.WriteLine(file);
-        }
+        _path = path;
+        _filterFunc = (_) => true;
     }
 
-    public FileSystemVisitor(string filename, ReturnedDelegate delegat)
+    public FileSystemVisitor(string filename, FilterFunctionDelegate delegat) : this(filename)
     {
-        foreach (string file in Explore(filename,delegat)) {
-            Console.WriteLine(file);
-        }
+        _filterFunc = delegat;
     }
-    
-    public IEnumerable<string> Explore(string path, ReturnedDelegate delegat)
+    public IEnumerable<string> Explore()
+    {
+        OnStart?.Invoke();
+
+        foreach (var entry in Explore(_path))
+        {
+            yield return entry;
+        }
+        
+        OnFinish?.Invoke();
+    }
+    private IEnumerable<string> Explore(string path)
     {
         foreach (var entry in Directory.EnumerateFileSystemEntries(path))
         {
-            if (delegat(entry,"txt"))
+            var customArgs = new CustomEventArgs();
+            
+            OnFileFound?.Invoke(entry,customArgs);
+            if (customArgs.AllowAbort)
             {
-                yield return ShortenPath(entry);
+                break;
             }
-
+            
+            if (_filterFunc(entry))
+            {
+                OnFilteredFileFound?.Invoke(entry,customArgs);
+                yield return entry;
+            }
         }
         
         foreach (var subDir in Directory.EnumerateDirectories(path))
         {
-            Console.WriteLine(ShortenPath(subDir));
+            var customArgs = new CustomEventArgs();
+            
+            OnDirectoryFound?.Invoke(subDir,customArgs);
+            if (!customArgs.AllowExclude)
+            {
+                if (_filterFunc(subDir))
+                {
+                    OnFilteredDirectoryFound?.Invoke(subDir,customArgs);
+                    yield return subDir;
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
             foreach (var entry in Explore(subDir))
             {
-                yield return ShortenPath(entry);
+                yield return entry;
             }
         }
     }
-    public IEnumerable<string> Explore(string path)
-    {
-        foreach (var entry in Directory.EnumerateFileSystemEntries(path))
-        {
-            if (Filter(entry,"txt"))
-            {
-                yield return ShortenPath(entry);
-            }
+}
 
-        }
-        
-        foreach (var subDir in Directory.EnumerateDirectories(path))
-        {
-            Console.WriteLine(ShortenPath(subDir));
-            foreach (var entry in Explore(subDir))
-            {
-                yield return ShortenPath(entry);
-            }
-        }
-    }
-    
-    static string ShortenPath(string filename)
-    {
-        string[] newStr = filename.Split("/");
-
-        return newStr[newStr.Length -1];
-    }
-
-    bool Filter(string filename, string extention)
-    {
-        string[] newstring = ShortenPath(filename).Split(".");
-        return newstring[newstring.Length -1] == extention;
-    }
+public class CustomEventArgs : EventArgs
+{
+    public bool AllowAbort { get; set; }
+    public bool AllowExclude { get; set; }
 }
