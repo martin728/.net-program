@@ -6,10 +6,12 @@ class FileSystemVisitor
     private readonly string _path;
     private readonly FilterFunctionDelegate _filterFunc;
 
-    public event Notify OnStart;
-    public event Notify OnFinish;
-    public event FindFolderDelegate OnFileFound;
-    public event FindFolderDelegate OnFolderExclude;
+    public event Notify? OnStart;
+    public event Notify? OnFinish;
+    public event FindFolderDelegate? OnFileFound;
+    public event FindFolderDelegate? OnFilteredFileFound;
+    public event FindFolderDelegate? OnDirectoryFound;
+    public event FindFolderDelegate? OnFilteredDirectoryFound;
 
     public FileSystemVisitor(string path)
     {
@@ -21,32 +23,43 @@ class FileSystemVisitor
     {
         _filterFunc = delegat;
     }
-
-    public IEnumerable<string> Explore(string path)
+    public IEnumerable<string> Explore()
     {
-        OnStart.Invoke();
+        OnStart?.Invoke();
+
+        foreach (var entry in Explore(_path))
+        {
+            yield return entry;
+        }
+        
+        OnFinish?.Invoke();
+    }
+    private IEnumerable<string> Explore(string path)
+    {
         foreach (var entry in Directory.EnumerateFileSystemEntries(path))
         {
-            var i = new CustomEventArgs();
-            OnFileFound.Invoke(entry,i);
-            if (i.AllowAbort)
+            var customArgs = new CustomEventArgs();
+            OnFileFound?.Invoke(entry,customArgs);
+            if (customArgs.AllowAbort)
             {
                 break;
             }
             if (_filterFunc(entry))
             {
+                OnFilteredFileFound?.Invoke(entry,customArgs);
                 yield return entry;
             }
         }
         
         foreach (var subDir in Directory.EnumerateDirectories(path))
         {
-            var i = new CustomEventArgs();
-            OnFolderExclude.Invoke(subDir,i);
-            if (!i.AllowExclude)
+            var customArgs = new CustomEventArgs();
+            OnDirectoryFound?.Invoke(subDir,customArgs);
+            if (!customArgs.AllowExclude)
             {
                 if (_filterFunc(subDir))
                 {
+                    OnFilteredDirectoryFound?.Invoke(subDir,customArgs);
                     yield return subDir;
                 }
                 else
@@ -60,7 +73,6 @@ class FileSystemVisitor
                 yield return entry;
             }
         }
-        OnFinish();
     }
 }
 
