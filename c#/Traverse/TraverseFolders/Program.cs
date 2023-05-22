@@ -13,6 +13,7 @@ namespace Traversing
             visitor.OnFilteredFileFound += FilteredFileFound;
             visitor.OnDirectoryFound += DirectoryFound;
             visitor.OnFilteredDirectoryFound += FilteredDirectoryFound;
+            
             foreach (var file in visitor.Explore())
             {
                 Console.WriteLine(file);

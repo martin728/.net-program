@@ -39,11 +39,13 @@ class FileSystemVisitor
         foreach (var entry in Directory.EnumerateFileSystemEntries(path))
         {
             var customArgs = new CustomEventArgs();
+            
             OnFileFound?.Invoke(entry,customArgs);
             if (customArgs.AllowAbort)
             {
                 break;
             }
+            
             if (_filterFunc(entry))
             {
                 OnFilteredFileFound?.Invoke(entry,customArgs);
@@ -54,6 +56,7 @@ class FileSystemVisitor
         foreach (var subDir in Directory.EnumerateDirectories(path))
         {
             var customArgs = new CustomEventArgs();
+            
             OnDirectoryFound?.Invoke(subDir,customArgs);
             if (!customArgs.AllowExclude)
             {
