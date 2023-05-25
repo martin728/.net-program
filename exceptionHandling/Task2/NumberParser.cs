@@ -18,10 +18,10 @@ namespace Task2
                 throw new FormatException("Invalid input format");
             }
             
-            var num = 0;
+            long number = 0;
             var sign = 1;
-            int i = 0;
-            int res = 0;
+            var i = 0;
+            
             if (str[0] == '-')
             {
                 sign = -1;
@@ -35,25 +35,25 @@ namespace Task2
             
             while (i < str.Length)
             {
-                int currentNum = str[i] - '0';
+                var currentNum = str[i] - '0';
                 if (currentNum > 9 || currentNum < 0)
                 {
                     throw new FormatException("Input must contain only digits");
                 }
 
-                num = (num * 10) + currentNum;
+                number = (number * 10) + currentNum;
                 i++;
             }
 
-            res = num * sign;
+            number *= sign;
             
-            if (res > Int32.MaxValue || res < int.MinValue)
+            if (number > int.MaxValue || number < int.MinValue)
             {
                 throw new OverflowException("Overflow exception");
             }
 
-            Console.WriteLine(res);
-            return res;
+            Console.WriteLine(number);
+            return (int) number;
         }
     }
 }

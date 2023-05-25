@@ -16,7 +16,7 @@ namespace Task1
             // Console.WriteLine(input.Substring(0, 1));
 
             var num = new NumberParser();
-            num.Parse("-2147483648");
+            num.Parse("-9999999999999999");
         }
     }
 }
