@@ -9,8 +9,8 @@ namespace Task2
             if (stringValue is null)
             {
                 throw new ArgumentNullException(nameof(stringValue),"Value is null");
-
             }
+            
             var str = stringValue.Trim();
 
             if (string.IsNullOrWhiteSpace(str) || string.IsNullOrEmpty(str))
@@ -27,6 +27,7 @@ namespace Task2
                 sign = -1;
                 i = 1;
             }
+            
             if (str[0] == '+')
             {
                 sign = 1;
