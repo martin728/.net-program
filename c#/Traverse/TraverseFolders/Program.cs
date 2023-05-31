@@ -2,7 +2,7 @@
 
 namespace Traversing
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -91,7 +91,7 @@ namespace Traversing
                 args.AllowExclude = true;
             }
         }
-        static bool FilterByCsExtension(string name)
+        public static bool FilterByCsExtension(string name)
         {
             return name.Contains("cs");
         }
