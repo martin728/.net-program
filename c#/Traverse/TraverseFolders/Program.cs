@@ -96,12 +96,12 @@ namespace Traversing
             return name.Contains("cs");
         }
 
-        static void ShowStartMessage()
+        public static void ShowStartMessage()
         {
             Console.WriteLine("Process started");
         }
         
-        static void ShowFinishMessage()
+        public static void ShowFinishMessage()
         {
             Console.WriteLine("Process finished");
         }

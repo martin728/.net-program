@@ -2,7 +2,7 @@ namespace TraverseTests;
 using Traversing;
 
 [TestFixture]
-public class Tests
+public class FileSystemVisitorTests
 {
     private readonly string _path = "../../../testDir";
     
@@ -48,16 +48,43 @@ public class Tests
         // Arrange
         var parser = new FileSystemVisitor(_path);
         var log = "Process started";
-
+        var files = new List<string>();
         var stringWriter = new StringWriter();
+        
+        parser.OnStart += Program.ShowStartMessage;
         Console.SetOut(stringWriter);
         
         // Act
-        parser.Explore();
-        
-        // Assert
-        var output = stringWriter.ToString();
+        foreach (var file in parser.Explore())
+        {
+            files.Add(file);
+        }
+        var outputLines = stringWriter.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
 
-        Assert.AreEqual(log, output);
+        // Assert
+        Assert.AreEqual(log, outputLines[0]);
+    }
+    
+    [Test]
+    public void TestIfProcessFinished_AsValid()
+    {
+        // Arrange
+        var parser = new FileSystemVisitor(_path);
+        var log = "Process finished";
+        var files = new List<string>();
+        var stringWriter = new StringWriter();
+        
+        parser.OnFinish += Program.ShowFinishMessage;
+        Console.SetOut(stringWriter);
+        
+        // Act
+        foreach (var file in parser.Explore())
+        {
+            files.Add(file);
+        }        
+        var outputLines = stringWriter.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+       
+        // Assert
+        Assert.AreEqual(log, outputLines[0]);
     }
 }
