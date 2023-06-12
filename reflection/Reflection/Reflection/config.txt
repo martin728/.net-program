@@ -1,0 +1,4 @@
+MyIntSetting=10
+MyFloatSetting=2.5
+MyStringSetting=Hello
+MyTimeSpanSetting=00:30:00
