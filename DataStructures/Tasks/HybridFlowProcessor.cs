@@ -1,28 +1,51 @@
 ﻿using System;
+using System.Collections.Generic;
 using Tasks.DoNotChange;
 
 namespace Tasks
 {
     public class HybridFlowProcessor<T> : IHybridFlowProcessor<T>
     {
-        public T Dequeue()
-        {
-            throw new NotImplementedException();
-        }
+        private readonly LinkedList<T> _storage;
 
-        public void Enqueue(T item)
+        public HybridFlowProcessor()
         {
-            throw new NotImplementedException();
-        }
-
-        public T Pop()
-        {
-            throw new NotImplementedException();
+            _storage = new LinkedList<T>();
         }
 
         public void Push(T item)
         {
-            throw new NotImplementedException();
+            _storage.AddFirst(item);
+        }
+
+        public T Pop()
+        {
+            if (_storage.Count == 0)
+            {
+                throw new InvalidOperationException("No items to pop.");
+            }
+
+            var firstItem = _storage.First.Value;
+            _storage.RemoveFirst();
+            return firstItem;
+        }
+
+        public void Enqueue(T item)
+        {
+            _storage.AddLast(item);
+        }
+
+        public T Dequeue()
+        {
+            if (_storage.Count == 0)
+            {
+                throw new InvalidOperationException("No items to dequeue.");
+            }
+
+            var firstItem = _storage.First.Value;
+            _storage.RemoveFirst();
+            return firstItem;
         }
     }
+
 }
