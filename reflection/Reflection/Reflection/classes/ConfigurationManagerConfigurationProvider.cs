@@ -33,8 +33,8 @@ namespace Reflection.classes
             try
             {
                 string value = ConfigurationManager.AppSettings[settingName];
-                
-                type == typeof(TimeSpan) ? TimeSpan.Parse(value) : Convert.ChangeType(value, type);
+
+                return type == typeof(TimeSpan) ? TimeSpan.Parse(value) : Convert.ChangeType(value, type);
             }
             catch (Exception e)
             {

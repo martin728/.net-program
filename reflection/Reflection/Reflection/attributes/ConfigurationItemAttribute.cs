@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 
 namespace Reflection.attributes
 {
@@ -9,11 +10,11 @@ namespace Reflection.attributes
         public Type ProviderType { get; set; }
         public string FilePath { get; set; }
 
-        public ConfigurationItemAttribute(string settingName, Type providerType, string filePath?)
+        public ConfigurationItemAttribute(string settingName, Type providerType, string filePath = null)
         {
             SettingName = settingName;
             ProviderType = providerType;
-            FilePath = filePath;
+            FilePath = ConfigurationManager.AppSettings["Path"];
         }
     }
 }
