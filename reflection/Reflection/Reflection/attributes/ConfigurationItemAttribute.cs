@@ -7,10 +7,9 @@ namespace Reflection.attributes
     {
         public string SettingName { get; set; }
         public Type ProviderType { get; set; }
-        
         public string FilePath { get; set; }
 
-        public ConfigurationItemAttribute(string settingName, Type providerType, string filePath)
+        public ConfigurationItemAttribute(string settingName, Type providerType, string filePath?)
         {
             SettingName = settingName;
             ProviderType = providerType;

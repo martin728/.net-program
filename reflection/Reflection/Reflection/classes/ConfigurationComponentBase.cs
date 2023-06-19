@@ -7,6 +7,33 @@ namespace Reflection.classes
 {
     public class ConfigurationComponentBase
     {
+        private IConfigurationProvider CreateProvider(Type providerType, string filePath = null)
+        {
+            IConfigurationProvider provider = null;
+
+            try
+            {
+                if (providerType == typeof(FileConfigurationProvider))
+                {
+                    provider = new FileConfigurationProvider(filePath);
+                }
+                else if (providerType == typeof(ConfigurationManagerConfigurationProvider))
+                {
+                    provider = new ConfigurationManagerConfigurationProvider();
+                }
+                else
+                {
+                    Console.WriteLine($"Unsupported provider type: {providerType}");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error creating instance of {providerType}: {e.Message}");
+            }
+
+            return provider;
+        }
+
         public void SaveSettings()
         {
             Type type = GetType();
@@ -22,15 +49,8 @@ namespace Reflection.classes
 
                 if (attribute.ProviderType != null && typeof(IConfigurationProvider).IsAssignableFrom(attribute.ProviderType))
                 {
-                    try
-                    {
-                        IConfigurationProvider provider = (IConfigurationProvider)Activator.CreateInstance(attribute.ProviderType);
-                        provider?.SaveSetting(attribute.SettingName, value);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine($"Error creating instance of {attribute.ProviderType}: {e.Message}");
-                    }
+                    IConfigurationProvider provider = CreateProvider(attribute.ProviderType);
+                    provider?.SaveSetting(attribute.SettingName, value);
                 }
                 else
                 {
@@ -39,7 +59,6 @@ namespace Reflection.classes
             }
         }
 
-        
         public void LoadSettings()
         {
             Type type = GetType();
@@ -51,41 +70,31 @@ namespace Reflection.classes
                 if (attribute == null)
                     continue;
 
-                IConfigurationProvider provider = null;
+                IConfigurationProvider provider = CreateProvider(attribute.ProviderType, attribute.FilePath);
 
-                try
+                if (provider != null)
                 {
-                    if (attribute.ProviderType == typeof(FileConfigurationProvider))
+                    try
                     {
-                        provider = new FileConfigurationProvider(attribute.FilePath);
-                    }
-                    else if (attribute.ProviderType == typeof(ConfigurationManagerConfigurationProvider))
-                    {
-                        provider = new ConfigurationManagerConfigurationProvider();
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Unsupported provider type: {attribute.ProviderType}");
-                        continue;
-                    }
+                        object value = provider.GetSetting(attribute.SettingName, property.PropertyType);
 
-                    object value = provider.GetSetting(attribute.SettingName, property.PropertyType);
-
-                    if (value != null)
-                    {
-                        property.SetValue(this, value);
+                        if (value != null)
+                        {
+                            property.SetValue(this, value);
+                        }
+                        else if (property.PropertyType.IsValueType)
+                        {
+                            property.SetValue(this, Activator.CreateInstance(property.PropertyType));
+                        }
                     }
-                    else if (property.PropertyType.IsValueType)
+                    catch (Exception e)
                     {
-                        property.SetValue(this, Activator.CreateInstance(property.PropertyType));
+                        Console.WriteLine($"Error creating instance of {attribute.ProviderType}: {e.Message}");
                     }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Error creating instance of {attribute.ProviderType}: {e.Message}");
                 }
             }
         }
+
 
     }
     
