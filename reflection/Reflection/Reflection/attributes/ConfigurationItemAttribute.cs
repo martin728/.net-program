@@ -14,7 +14,7 @@ namespace Reflection.attributes
         {
             SettingName = settingName;
             ProviderType = providerType;
-            FilePath = ConfigurationManager.AppSettings["Path"];
+            FilePath = filePath;
         }
     }
 }

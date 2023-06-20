@@ -7,28 +7,28 @@ namespace Reflection.classes
 {
     public class ConfigurationComponentBase
     {
-        private IConfigurationProvider CreateProvider(Type providerType, string filePath = null)
+        private IConfigurationProvider CreateProvider(ConfigurationItemAttribute configAttribute)
         {
             IConfigurationProvider provider = null;
 
             try
             {
-                if (providerType == typeof(FileConfigurationProvider))
+                if (configAttribute.ProviderType == typeof(FileConfigurationProvider))
                 {
-                    provider = new FileConfigurationProvider(filePath);
+                    provider = new FileConfigurationProvider(configAttribute.FilePath);
                 }
-                else if (providerType == typeof(ConfigurationManagerConfigurationProvider))
+                else if (configAttribute.ProviderType == typeof(ConfigurationManagerConfigurationProvider))
                 {
                     provider = new ConfigurationManagerConfigurationProvider();
                 }
                 else
                 {
-                    Console.WriteLine($"Unsupported provider type: {providerType}");
+                    Console.WriteLine($"Unsupported provider type: {configAttribute.ProviderType}");
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Error creating instance of {providerType}: {e.Message}");
+                Console.WriteLine($"Error creating instance of {configAttribute.ProviderType}: {e.Message}");
             }
 
             return provider;
@@ -49,7 +49,7 @@ namespace Reflection.classes
 
                 if (attribute.ProviderType != null && typeof(IConfigurationProvider).IsAssignableFrom(attribute.ProviderType))
                 {
-                    IConfigurationProvider provider = CreateProvider(attribute.ProviderType);
+                    IConfigurationProvider provider = CreateProvider(attribute);
                     provider?.SaveSetting(attribute.SettingName, value);
                 }
                 else
@@ -70,7 +70,7 @@ namespace Reflection.classes
                 if (attribute == null)
                     continue;
 
-                IConfigurationProvider provider = CreateProvider(attribute.ProviderType, attribute.FilePath);
+                IConfigurationProvider provider = CreateProvider(attribute);
 
                 if (provider != null)
                 {

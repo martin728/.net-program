@@ -14,7 +14,7 @@ namespace Reflection
       Console.WriteLine("Loaded settings:");
       Console.WriteLine($"MyFloatSetting:{component.MyFloatSetting}");
       Console.WriteLine($"MyStringSetting:{component.MyIntSetting}");
-      Console.WriteLine($"MyIntSetting:{component.MyIntSetting}");
+      Console.WriteLine($"MyIntSetting:{component.MyStringSetting}");
       Console.WriteLine($"MyTimeSpanSetting:{component.MyTimeSpanSetting}");
 
       component.MyIntSetting = 42;
