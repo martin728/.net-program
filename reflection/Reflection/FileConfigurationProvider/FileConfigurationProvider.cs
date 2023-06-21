@@ -1,11 +1,10 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Net;
 
-namespace Reflection.classes
+namespace FileConfigurationProvider
 {
-    public class FileConfigurationProvider : IConfigurationProvider
+    public class FileConfigurationProvider : IConfigurationProvider.IConfigurationProvider
     {
         private string _filePath;
 

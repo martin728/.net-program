@@ -1,9 +1,9 @@
 using System;
 using System.Configuration;
 
-namespace Reflection.classes
+namespace ConfigurationManagerConfigurationProvider
 {
-    public class ConfigurationManagerConfigurationProvider : IConfigurationProvider
+    public class ConfigurationManagerConfigurationProvider : IConfigurationProvider.IConfigurationProvider
     {
         public void SaveSetting(string settingName, object value)
         {

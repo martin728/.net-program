@@ -4,14 +4,13 @@
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{D22918D3-D647-47FF-88D9-2538039D58F3}</ProjectGuid>
-        <OutputType>Exe</OutputType>
+        <ProjectGuid>{79C67EF6-0139-4F12-8C3E-B53800CEA195}</ProjectGuid>
+        <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>Reflection</RootNamespace>
-        <AssemblyName>Reflection</AssemblyName>
+        <RootNamespace>IConfigurationProvider</RootNamespace>
+        <AssemblyName>IConfigurationProvider</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
-        <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,41 +33,13 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="System" />
-        <Reference Include="System.Configuration" />
-        <Reference Include="System.Configuration.ConfigurationManager, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-          <HintPath>..\packages\System.Configuration.ConfigurationManager.8.0.0-preview.4.23259.5\lib\net462\System.Configuration.ConfigurationManager.dll</HintPath>
-        </Reference>
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="attributes\ConfigurationItemAttribute.cs" />
-        <Compile Include="classes\ConfigurationComponent.cs" />
-        <Compile Include="classes\ConfigurationComponentBase.cs" />
-        <Compile Include="Program.cs" />
+        <Compile Include="IConfigurationProvider.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-    </ItemGroup>
-    <ItemGroup>
-      <None Include="App.config" />
-      <None Include="packages.config" />
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\ConfigurationManagerConfigurationProvider\ConfigurationManagerConfigurationProvider.csproj">
-        <Project>{baf24769-f0c6-4568-8ac0-d5ed9d19e656}</Project>
-        <Name>ConfigurationManagerConfigurationProvider</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\FileConfigurationProvider\FileConfigurationProvider.csproj">
-        <Project>{49957a22-2bfe-45a1-bd74-db04a30dc83b}</Project>
-        <Name>FileConfigurationProvider</Name>
-      </ProjectReference>
-      <ProjectReference Include="..\IConfigurationProvider\IConfigurationProvider.csproj">
-        <Project>{79c67ef6-0139-4f12-8c3e-b53800cea195}</Project>
-        <Name>IConfigurationProvider</Name>
-      </ProjectReference>
-    </ItemGroup>
-    <ItemGroup>
-      <Content Include="config.txt" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -23,7 +23,12 @@ namespace Reflection
       component.MyTimeSpanSetting = TimeSpan.FromMinutes(0);
 
       component.SaveSettings();
-      
+      Console.WriteLine("Loaded settings:");
+      Console.WriteLine($"MyFloatSetting:{component.MyFloatSetting}");
+      Console.WriteLine($"MyStringSetting:{component.MyIntSetting}");
+      Console.WriteLine($"MyIntSetting:{component.MyStringSetting}");
+      Console.WriteLine($"MyTimeSpanSetting:{component.MyTimeSpanSetting}");
+
       Console.WriteLine("Settings saved");
       Console.ReadLine();
     }

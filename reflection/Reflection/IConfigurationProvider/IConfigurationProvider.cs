@@ -1,6 +1,6 @@
 using System;
 
-namespace Reflection
+namespace IConfigurationProvider
 {
     public interface IConfigurationProvider
     {
