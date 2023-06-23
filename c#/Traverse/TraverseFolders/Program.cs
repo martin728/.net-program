@@ -2,7 +2,7 @@
 
 namespace Traversing
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -91,17 +91,17 @@ namespace Traversing
                 args.AllowExclude = true;
             }
         }
-        static bool FilterByCsExtension(string name)
+        public static bool FilterByCsExtension(string name)
         {
             return name.Contains("cs");
         }
 
-        static void ShowStartMessage()
+        public static void ShowStartMessage()
         {
             Console.WriteLine("Process started");
         }
         
-        static void ShowFinishMessage()
+        public static void ShowFinishMessage()
         {
             Console.WriteLine("Process finished");
         }

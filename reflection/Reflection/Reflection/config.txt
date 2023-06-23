@@ -1,0 +1,2 @@
+MyIntSetting=42
+MyStringSetting=Hello World
