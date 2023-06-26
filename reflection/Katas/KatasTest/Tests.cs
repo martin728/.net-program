@@ -53,9 +53,30 @@ namespace KatasTest
         [TestCase(20, "Even")]
         public void CheckNumber_ReturnsExpectedResult(int num, string expectedResult)
         {
+            //Act
             string result = _fizzbuzz.CheckNumber(num);
+            
+            //Assert
             Assert.AreEqual(expectedResult, result);
         }
         
+        //Is Leap Year
+        [TestCase(2000, true)]
+        [TestCase(2004, true)]
+        [TestCase(1900, false)]
+        [TestCase(2001, false)]
+        [TestCase(2100, false)]
+        [TestCase(2024, true)]
+        public void IsLeapYear_WhenCalledWithYear_ReturnsExpectedResult(int year, bool expectedResult)
+        {
+            // Arrange
+            bool isLeap;
+
+            // Act
+            isLeap = _fizzbuzz.IsLeapYear(year);
+
+            // Assert
+            Assert.AreEqual(expectedResult, isLeap);
+        } 
     }
 }

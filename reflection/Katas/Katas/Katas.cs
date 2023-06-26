@@ -43,5 +43,11 @@ namespace Katas
                 return "Odd";
             }        
         }
+        
+        //The Leap Year Kata
+        public bool IsLeapYear(int year)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
