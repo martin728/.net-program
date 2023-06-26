@@ -15,7 +15,33 @@ namespace Katas
         //The OddEven Kata
         public string CheckNumber(int num)
         {
-            throw new NotImplementedException();
+            if (num < 2)
+            {
+                return num.ToString();
+            }
+
+            bool isPrime = true;
+            for (int i = 2; i <= Math.Sqrt(num); i++)
+            {
+                if (num % i == 0)
+                {
+                    isPrime = false;
+                    break;
+                }
+            }
+
+            if (isPrime)
+            {
+                return num.ToString();
+            }
+            else if (num % 2 == 0)
+            {
+                return "Even";
+            }
+            else
+            {
+                return "Odd";
+            }        
         }
     }
 }
