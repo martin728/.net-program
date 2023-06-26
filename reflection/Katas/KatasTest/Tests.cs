@@ -32,11 +32,10 @@ namespace KatasTest
         }
         
         [Test]
-        public void FizzBuzz_ThrowsArgumentOutOfRangeException()
+        [TestCase(-1)]
+        [TestCase(101)]
+        public void FizzBuzz_ThrowsArgumentOutOfRangeException(int num)
         {
-            // Arrange
-            int num = -1;
-
             // Act and Assert
             Assert.Throws<ArgumentOutOfRangeException>(() => _katas.FizzBuzz(num));
         }
@@ -72,11 +71,10 @@ namespace KatasTest
         }
         
         [Test]
-        public void CheckNumber_ThrowsArgumentOutOfRangeException()
+        [TestCase(-1)]
+        [TestCase(101)]
+        public void CheckNumber_ThrowsArgumentOutOfRangeException(int num)
         {
-            // Arrange
-            int num = -1;
-
             // Act and Assert
             Assert.Throws<ArgumentOutOfRangeException>(() => _katas.CheckNumber(num));
         }

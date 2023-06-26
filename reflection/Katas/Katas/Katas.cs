@@ -10,13 +10,13 @@ namespace Katas
             number % 15 == 0 ? "FizzBuzz" :
             number % 3 == 0 ? "Fizz" :
             number % 5 == 0 ? "Buzz" :
-            number > 100 || number < 0 ? throw new ArgumentOutOfRangeException() :
+            number > 100 || number <= 0 ? throw new ArgumentOutOfRangeException() :
             number.ToString();
 
         //The OddEven Kata
         public string CheckNumber(int num)
         {
-            if (num < 0 || num > 100)
+            if (num <= 0 || num > 100)
             {
                 throw new ArgumentOutOfRangeException();
             }
