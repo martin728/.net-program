@@ -6,12 +6,12 @@ namespace KatasTest
     [TestFixture]
     public class Tests
     {
-        private Katas.Katas _fizzbuzz;
+        private Katas.Katas _katas;
 
         [SetUp]
         public void Setup()
         {
-            _fizzbuzz = new Katas.Katas();
+            _katas = new Katas.Katas();
         }
         
         //FizzBuzz
@@ -25,10 +25,20 @@ namespace KatasTest
         public void FizzBuzz_WithVariousInputs_ReturnsExpectedOutput(int number, string expected)
         {
             // Act
-            string result = _fizzbuzz.FizzBuzz(number);
+            string result = _katas.FizzBuzz(number);
             
             // Assert
             Assert.AreEqual(expected, result);
+        }
+        
+        [Test]
+        public void FizzBuzz_ThrowsArgumentOutOfRangeException()
+        {
+            // Arrange
+            int num = -1;
+
+            // Act and Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() => _katas.FizzBuzz(num));
         }
         
         //OddEven
@@ -55,10 +65,20 @@ namespace KatasTest
         public void CheckNumber_ReturnsExpectedResult(int num, string expectedResult)
         {
             //Act
-            string result = _fizzbuzz.CheckNumber(num);
+            string result = _katas.CheckNumber(num);
             
             //Assert
             Assert.AreEqual(expectedResult, result);
+        }
+        
+        [Test]
+        public void CheckNumber_ThrowsArgumentOutOfRangeException()
+        {
+            // Arrange
+            int num = -1;
+
+            // Act and Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() => _katas.CheckNumber(num));
         }
         
         //Is Leap Year
@@ -74,10 +94,20 @@ namespace KatasTest
             bool isLeap;
 
             // Act
-            isLeap = _fizzbuzz.IsLeapYear(year);
+            isLeap = _katas.IsLeapYear(year);
 
             // Assert
             Assert.AreEqual(expectedResult, isLeap);
         } 
+        
+        [Test]
+        public void IsLeapYear_ThrowsArgumentOutOfRangeException()
+        {
+            // Arrange
+            int num = -1;
+
+            // Act and Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() => _katas.IsLeapYear(num));
+        }
     }
 }

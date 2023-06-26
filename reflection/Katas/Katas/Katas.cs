@@ -10,11 +10,17 @@ namespace Katas
             number % 15 == 0 ? "FizzBuzz" :
             number % 3 == 0 ? "Fizz" :
             number % 5 == 0 ? "Buzz" :
+            number > 100 || number < 0 ? throw new ArgumentOutOfRangeException() :
             number.ToString();
 
         //The OddEven Kata
         public string CheckNumber(int num)
         {
+            if (num < 0 || num > 100)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            
             if (num < 2)
             {
                 return num.ToString();
@@ -30,39 +36,18 @@ namespace Katas
                 }
             }
 
-            if (isPrime)
-            {
-                return num.ToString();
-            }
-            else if (num % 2 == 0)
-            {
-                return "Even";
-            }
-            else
-            {
-                return "Odd";
-            }        
+            return isPrime ? num.ToString() : (num % 2 == 0 ? "Even" : "Odd");
         }
         
         //The Leap Year Kata
         public bool IsLeapYear(int year)
         {
-            if (year % 4 != 0)
+            if (year <= 0)
             {
-                return false;
+                throw new ArgumentOutOfRangeException();
             }
-            else if (year % 100 != 0)
-            {
-                return true;
-            }
-            else if (year % 400 == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }        
+            
+            return (year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0);
         }
     }
 }
