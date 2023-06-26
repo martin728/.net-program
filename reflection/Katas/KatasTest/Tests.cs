@@ -13,7 +13,8 @@ namespace KatasTest
         {
             _fizzbuzz = new Katas.Katas();
         }
-        //FixxBuzz
+        
+        //FizzBuzz
         [TestCase(1, "1")]
         [TestCase(3, "Fizz")]
         [TestCase(5, "Buzz")]
