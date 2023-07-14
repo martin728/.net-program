@@ -17,23 +17,23 @@ namespace BrainstormSessions
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(
-                optionsBuilder => optionsBuilder.UseInMemoryDatabase("InMemoryDb"));
+                options => options.UseInMemoryDatabase("InMemoryDb"));
 
             services.AddControllersWithViews();
 
-            services.AddScoped<IBrainstormSessionRepository,
-                EFStormSessionRepository>();
+            services.AddScoped<IBrainstormSessionRepository, EFStormSessionRepository>();
         }
 
-        public void Configure(IApplicationBuilder app,
-            IWebHostEnvironment env,
-            IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
-                var repository = serviceProvider.GetRequiredService<IBrainstormSessionRepository>();
-
-                InitializeDatabaseAsync(repository).Wait();
+                using (var scope = app.ApplicationServices.CreateScope())
+                {
+                    var scopeServiceProvider = scope.ServiceProvider;
+                    var repository = scopeServiceProvider.GetRequiredService<IBrainstormSessionRepository>();
+                    InitializeDatabaseAsync(repository).Wait();
+                }
             }
 
             app.UseStaticFiles();
@@ -48,12 +48,14 @@ namespace BrainstormSessions
             });
         }
 
+
         public async Task InitializeDatabaseAsync(IBrainstormSessionRepository repo)
         {
             var sessionList = await repo.ListAsync();
             if (!sessionList.Any())
             {
-                await repo.AddAsync(GetTestSession());
+                var session = GetTestSession();
+                await repo.AddAsync(session);
             }
         }
 
