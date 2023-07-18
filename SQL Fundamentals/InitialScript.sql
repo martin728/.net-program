@@ -1,0 +1,35 @@
+﻿CREATE TABLE [dbo].[Person]
+(
+	Id INT NOT NULL PRIMARY KEY,
+	FirstName NVARCHAR(50) NOT NULL,
+	LastName NVARCHAR(50) NOT NULL
+);
+
+CREATE TABLE [dbo].[Address]
+(
+	Id INT NOT NULL PRIMARY KEY,
+	Street NVARCHAR(50) NOT NULL,
+	City NVARCHAR(50) NULL,
+	State NVARCHAR(100) NULL,
+	ZipCode NVARCHAR(50) NULL
+);
+
+CREATE TABLE [dbo].[Employee]
+(
+	Id INT NOT NULL PRIMARY KEY,
+	AddressId INT NOT NULL,
+	PersonId INT NOT NULL,
+	CompanyName NVARCHAR(50) NOT NULL,
+	Position NVARCHAR(50) NULL,
+	EmployeeName NVARCHAR(100) NULL,
+	FOREIGN KEY (PersonId) REFERENCES Person(Id),
+	FOREIGN KEY (AddressId) REFERENCES Address(Id),
+);
+
+CREATE TABLE [dbo].[Company]
+(
+	Id INT NOT NULL PRIMARY KEY,
+	Name NVARCHAR(20) NOT NULL,
+	AddressId INT NOT NULL,
+	FOREIGN KEY (AddressId) REFERENCES Address(Id)
+);
