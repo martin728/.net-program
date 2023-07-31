@@ -47,12 +47,26 @@ namespace Task1
             return customers.Where(customer => customer.Orders.Sum(order => order.Total) > limit);
         }
 
-        public static IEnumerable<(Customer customer, DateTime dateOfEntry)> Linq4(
-            IEnumerable<Customer> customers
-        )
+        public static IEnumerable<(Customer customer, DateTime dateOfEntry)> Linq4(IEnumerable<Customer> customers)
         {
-            return customers.Select(customer => (customer, customer.Orders.Min(order => order.OrderDate)));
+            if (customers == null)
+                throw new ArgumentNullException(nameof(customers));
+
+            return customers
+                .Select<Customer, (Customer customer, DateTime? dateOfEntry)>(customer =>
+                {
+                    DateTime? minDate = null;
+                    foreach (var order in customer.Orders)
+                    {
+                        if (minDate == null || order.OrderDate < minDate)
+                            minDate = order.OrderDate;
+                    }
+                    return (customer, minDate);
+                })
+                .Where(tuple => tuple.dateOfEntry.HasValue)
+                .Select(tuple => (tuple.customer, tuple.dateOfEntry.Value));
         }
+
 
         public static IEnumerable<(Customer customer, DateTime dateOfEntry)> Linq5(
             IEnumerable<Customer> customers
