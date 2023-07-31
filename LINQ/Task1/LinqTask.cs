@@ -58,11 +58,13 @@ namespace Task1
             IEnumerable<Customer> customers
         )
         {
-            return customers.Select(customer =>
-            {
-                var dateOfEntry = customer.Orders.Any() ? customer.Orders.Min(order => order.OrderDate) : DateTime.MinValue;
-                return (customer, dateOfEntry);
-            });
+            if (customers == null)
+                throw new ArgumentNullException(nameof(customers));
+
+            return customers
+                .Select(c => (customer: c, dateOfEntry: c.Orders.Min(o => o.OrderDate)))
+                .Where(ct => ct.dateOfEntry != DateTime.MaxValue);
+
         }
 
         public static IEnumerable<Customer> Linq6(IEnumerable<Customer> customers)
@@ -100,17 +102,21 @@ namespace Task1
             decimal expensive
         )
         {
-            var cheapProducts = products.Where(product => product.UnitPrice >= 0 && product.UnitPrice < cheap);
-            var averageProducts = products.Where(product => product.UnitPrice >= cheap && product.UnitPrice < middle);
-            var expensiveProducts = products.Where(product => product.UnitPrice >= middle && product.UnitPrice <= expensive);
+            if (products == null)
+                throw new ArgumentNullException(nameof(products));
 
-            return new List<(decimal category, IEnumerable<Product> products)>
+            var cheapProducts = products.Where(p => p.UnitPrice <= cheap);
+            var middleProducts = products.Where(p => p.UnitPrice > cheap && p.UnitPrice <= middle);
+            var expensiveProducts = products.Where(p => p.UnitPrice > middle && p.UnitPrice <= expensive);
+
+            return new[]
             {
-                (category: 0, products: cheapProducts),
-                (category: cheap, products: averageProducts),
-                (category: middle, products: expensiveProducts)
+                (category: cheap, products: cheapProducts),
+                (category: middle, products: middleProducts),
+                (category: expensive, products: expensiveProducts)
             };
         }
+
 
         public static IEnumerable<(string city, int averageIncome, int averageIntensity)> Linq9(
             IEnumerable<Customer> customers
@@ -121,12 +127,14 @@ namespace Task1
                     city: cityGroup.Key,
                     averageIncome: (int)cityGroup.Average(customer => customer.Orders.Sum(order => order.Total)),
                     averageIntensity: (int)cityGroup.Average(customer => customer.Orders.Count())
-                ));        }
+                ));        
+        }
 
         public static string Linq10(IEnumerable<Supplier> suppliers)
         {
             var uniqueCountryNames = suppliers.Select(supplier => supplier.Country).Distinct();
             var sortedUniqueCountryNames = uniqueCountryNames.OrderBy(country => country.Length).ThenBy(country => country);
-            return string.Join("", sortedUniqueCountryNames);        }
+            return string.Join("", sortedUniqueCountryNames);        
+        }
     }
 }
