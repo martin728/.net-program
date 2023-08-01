@@ -74,8 +74,9 @@ namespace Task1
                 throw new ArgumentNullException(nameof(customers));
 
             return customers
-                .Where(c => c.Orders.Any())
-                .Select(c => (customer: c, dateOfEntry: c.Orders.Min(o => o.OrderDate)));
+                .Where(c => c.Orders != null && c.Orders.Any())
+                .Select(c => (customer: c, dateOfEntry: c.Orders.Min(o => o.OrderDate)))
+                .OrderBy(ct => ct.dateOfEntry);
         }
 
         public static IEnumerable<Customer> Linq6(IEnumerable<Customer> customers)
