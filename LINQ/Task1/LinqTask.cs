@@ -68,17 +68,14 @@ namespace Task1
         }
 
 
-        public static IEnumerable<(Customer customer, DateTime dateOfEntry)> Linq5(
-            IEnumerable<Customer> customers
-        )
+        public static IEnumerable<(Customer customer, DateTime dateOfEntry)> Linq5(IEnumerable<Customer> customers)
         {
             if (customers == null)
                 throw new ArgumentNullException(nameof(customers));
 
             return customers
-                .Select(c => (customer: c, dateOfEntry: c.Orders.Min(o => o.OrderDate)))
-                .Where(ct => ct.dateOfEntry != DateTime.MaxValue);
-
+                .Where(c => c.Orders.Any())
+                .Select(c => (customer: c, dateOfEntry: c.Orders.Min(o => o.OrderDate)));
         }
 
         public static IEnumerable<Customer> Linq6(IEnumerable<Customer> customers)

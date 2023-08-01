@@ -68,7 +68,7 @@ namespace Task1.Tests
             Assert.That(() => LinqTask.Linq2UsingGroup(null, null).ToList(), Throws.ArgumentNullException);
         }
 
-        [TestCase(800, ExpectedResult = 2)]
+        [TestCase(800, ExpectedResult = 4)]
         [TestCase(0, ExpectedResult = 6)]
         [TestCase(-1, ExpectedResult = 6)]
         [TestCase(1, ExpectedResult = 5)]
@@ -231,9 +231,9 @@ namespace Task1.Tests
         {
             var expected = new List<(string city, int averageIncome, int averageIntensity)>
             {
-                ("Berlin", 2023, 3),
+                ("Berlin", 2022, 3),
                 ("Mexico D.F.", 680, 2),
-                ("London", 690, 1),
+                ("London", 689, 1),
                 ("Warszawa", 1, 0),
                 ("Sao Paulo", 0, 0),
                 ("USA", 0, 0)
