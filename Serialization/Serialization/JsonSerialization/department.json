@@ -1,0 +1,11 @@
+{
+  "DepartmentName": "IT",
+  "Employees": [
+    {
+      "EmployeeName": "John"
+    },
+    {
+      "EmployeeName": "Jane"
+    }
+  ]
+}
