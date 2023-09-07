@@ -10,7 +10,7 @@ namespace TestProject1
         public void CreateProduct_ShouldAddProductToList()
         {
             // Arrange
-            var orderManager = new OrderManager();
+            var orderManager = new Manager();
             var product = new Product { Id = 1, Name = "Product A" };
 
             // Act
@@ -26,7 +26,7 @@ namespace TestProject1
         public void UpdateProduct_ShouldUpdateProductDetails()
         {
             // Arrange
-            var orderManager = new OrderManager();
+            var orderManager = new Manager();
             var initialProduct = new Product { Id = 1, Name = "Initial Product" };
             orderManager.CreateProduct(initialProduct);
 
@@ -45,7 +45,7 @@ namespace TestProject1
         public void DeleteProduct_ShouldRemoveProductFromList()
         {
             // Arrange
-            var orderManager = new OrderManager();
+            var orderManager = new Manager();
             var product = new Product { Id = 1, Name = "Product A" };
             orderManager.CreateProduct(product);
 

@@ -8,13 +8,11 @@ namespace ConsoleApplication1.Classes
     using System.Collections.Generic;
     using System.Linq;
 
-    public class OrderManager
+    public class Manager
     {
-        private readonly List<Product> _products = new List<Product>();
-        private readonly List<Order> _orders = new List<Order>();
         private string _connectionString;
 
-        public OrderManager()
+        public Manager()
         {
             _connectionString = ConfigurationManager.ConnectionStrings["PostgreSQL"].ConnectionString;
         }
@@ -86,19 +84,25 @@ namespace ConsoleApplication1.Classes
             }
         }
 
-        public void DeleteProduct(int productId)
+        public void DeleteProduct(int productId, string filterStatus = null)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 connection.Open();
-                
                 var cmd = connection.CreateCommand();
-                cmd.CommandText = $"DELETE FROM public.\"Product\" WHERE \"Id\"={productId}";
+
+                if (!string.IsNullOrEmpty(filterStatus))
+                {
+                    cmd.CommandText = $"DELETE FROM public.\"Product\" WHERE \"Id\"={productId} AND \"Status\"='{filterStatus}'";
+                }
+                else
+                {
+                    cmd.CommandText = $"DELETE FROM public.\"Product\" WHERE \"Id\"={productId}";
+                }
 
                 cmd.ExecuteNonQuery();
-                
                 connection.Close();
-            }        
+            }
         }
 
         public void CreateOrder(Order order)
@@ -150,24 +154,33 @@ namespace ConsoleApplication1.Classes
                 connection.Open();
                 var cmd = connection.CreateCommand();
                 cmd.CommandText = $"UPDATE public.\"Order\" " +
-                                  $"SET \"CreateDate\"='{updatedOrder.CreateDate}', " +
-                                  $"\"UpdatedDate\"='{updatedOrder.UpdatedDate}', " +
-                                  $"\"ProductId\"={updatedOrder.ProductId}, " +
-                                  $"\"Status\"={updatedOrder.Status}";
+                                  $"SET \"CreateDate\"='{updatedOrder.CreateDate}'," +
+                                  $"\"UpdatedDate\"='{updatedOrder.UpdatedDate}'," +
+                                  $"\"ProductId\"={updatedOrder.ProductId}," +
+                                  $"\"Status\"={updatedOrder.Status} " + 
+                                  $"WHERE \"Id\"={updatedOrder.Id}";
+
                 
                 cmd.ExecuteNonQuery();
                 connection.Close();
             }
         }
 
-        public void DeleteOrder(int orderId)
+        public void DeleteOrder(int orderId, string filterStatus = null)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 connection.Open();
-                
                 var cmd = connection.CreateCommand();
-                cmd.CommandText = $"DELETE FROM public.\"Order\" WHERE \"Id\"={orderId}";
+
+                if (!string.IsNullOrEmpty(filterStatus))
+                {
+                    cmd.CommandText = $"DELETE FROM public.\"Order\" WHERE \"Id\"={orderId} AND \"Status\"='{filterStatus}'";
+                }
+                else
+                {
+                    cmd.CommandText = $"DELETE FROM public.\"Order\" WHERE \"Id\"={orderId}";
+                }
 
                 cmd.ExecuteNonQuery();
                 connection.Close();
@@ -176,6 +189,8 @@ namespace ConsoleApplication1.Classes
 
         public List<Product> GetAllProducts()
         {
+            var products = new List<Product>();
+
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 connection.Open();
@@ -198,18 +213,18 @@ namespace ConsoleApplication1.Classes
                             Length = (double)reader["Length"]
                         };
 
-                        _products.Add(product);
+                        products.Add(product);
                     }
                 }
                 
                 connection.Close();
-                return _products;
+                return products;
             }
         }
 
         public List<Order> GetOrdersByFilter(int filterYear, int filterMonth, string filterStatus, int filterProductId)
         {
-            var filteredOrders = _orders;
+            var filteredOrders = new List<Order>();
 
             using (var connection = new NpgsqlConnection(_connectionString))
             {

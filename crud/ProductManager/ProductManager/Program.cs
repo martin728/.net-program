@@ -9,7 +9,7 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-           var orderManager = new OrderManager();
+           var orderManager = new Manager();
 
             var newProduct = new Product
             {
