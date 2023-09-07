@@ -84,21 +84,14 @@ namespace ConsoleApplication1.Classes
             }
         }
 
-        public void DeleteProduct(int productId, string filterStatus = null)
+        public void DeleteProduct(int productId)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 connection.Open();
                 var cmd = connection.CreateCommand();
-
-                if (!string.IsNullOrEmpty(filterStatus))
-                {
-                    cmd.CommandText = $"DELETE FROM public.\"Product\" WHERE \"Id\"={productId} AND \"Status\"='{filterStatus}'";
-                }
-                else
-                {
-                    cmd.CommandText = $"DELETE FROM public.\"Product\" WHERE \"Id\"={productId}";
-                }
+                
+                cmd.CommandText = $"DELETE FROM public.\"Product\" WHERE \"Id\"={productId}";
 
                 cmd.ExecuteNonQuery();
                 connection.Close();
@@ -113,7 +106,7 @@ namespace ConsoleApplication1.Classes
                 var cmd = connection.CreateCommand();
                 cmd.CommandText = $"INSERT INTO public.\"Order\"" +
                                   $"(\"CreateDate\", \"UpdatedDate\", \"ProductId\", \"Status\") " +
-                                  $"VALUES ('{order.CreateDate}','{order.UpdatedDate}', {order.ProductId}, {order.Status});";
+                                  $"VALUES ('{order.CreateDate}','{order.UpdatedDate}', {order.ProductId}, {(int)order.Status});";
                 
                 cmd.ExecuteNonQuery();
                 connection.Close();
@@ -141,7 +134,7 @@ namespace ConsoleApplication1.Classes
                 result.CreateDate = (DateTime)reader["CreateDate"];
                 result.UpdatedDate = (DateTime)reader["UpdatedDate"];
                 result.ProductId = (int)reader["ProductId"];
-                result.Status = (int)reader["Status"];
+                result.Status = (OrderStatusEnum)reader["Status"];
                 
                 connection.Close();
             }
@@ -157,7 +150,7 @@ namespace ConsoleApplication1.Classes
                                   $"SET \"CreateDate\"='{updatedOrder.CreateDate}'," +
                                   $"\"UpdatedDate\"='{updatedOrder.UpdatedDate}'," +
                                   $"\"ProductId\"={updatedOrder.ProductId}," +
-                                  $"\"Status\"={updatedOrder.Status} " + 
+                                  $"\"Status\"={(int)updatedOrder.Status} " + 
                                   $"WHERE \"Id\"={updatedOrder.Id}";
 
                 
@@ -166,20 +159,17 @@ namespace ConsoleApplication1.Classes
             }
         }
 
-        public void DeleteOrder(int orderId, string filterStatus = null)
+        public void DeleteOrder(int orderId, OrderStatusEnum? filterStatus = null)
         {
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 connection.Open();
                 var cmd = connection.CreateCommand();
+                cmd.CommandText = $"DELETE FROM public.\"Order\" WHERE \"Id\"={orderId}";
 
-                if (!string.IsNullOrEmpty(filterStatus))
+                if (filterStatus != null)
                 {
-                    cmd.CommandText = $"DELETE FROM public.\"Order\" WHERE \"Id\"={orderId} AND \"Status\"='{filterStatus}'";
-                }
-                else
-                {
-                    cmd.CommandText = $"DELETE FROM public.\"Order\" WHERE \"Id\"={orderId}";
+                    cmd.CommandText += $" AND \"Status\"='{(int)filterStatus}'";
                 }
 
                 cmd.ExecuteNonQuery();
@@ -222,19 +212,31 @@ namespace ConsoleApplication1.Classes
             }
         }
 
-        public List<Order> GetOrdersByFilter(int filterYear, int filterMonth, string filterStatus, int filterProductId)
+        public List<Order> GetOrdersByFilter(
+            int? createDate = null,
+            int? updatedDate = null, 
+            OrderStatusEnum? filterStatus = null, 
+            int? filterProductId = null
+            )
         {
             var filteredOrders = new List<Order>();
 
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 connection.Open();
-                using (var command = new NpgsqlCommand("GetFilteredOrders", connection))
+                using (var command = connection.CreateCommand())
                 {
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
-                    command.Parameters.AddWithValue("filter_year", filterYear);
-                    command.Parameters.AddWithValue("filter_month", filterMonth);
+                    command.CommandText = @"CALL public.getfilteredorders(
+                                            @create_date, 
+                                            @updated_date, 
+                                            @filter_status, 
+                                            @filter_product_id, 
+                                            @result_set)";
+                    
+                    command.Parameters.AddWithValue("create_date", createDate);
+                    command.Parameters.AddWithValue("updated_date", updatedDate);
                     command.Parameters.AddWithValue("filter_status", filterStatus);
                     command.Parameters.AddWithValue("filter_product_id", filterProductId);
 
@@ -252,7 +254,7 @@ namespace ConsoleApplication1.Classes
                                 CreateDate = reader.GetDateTime(1),
                                 UpdatedDate = reader.GetDateTime(2),
                                 ProductId = reader.GetInt32(3),
-                                Status = reader.GetInt16(4)
+                                Status = (OrderStatusEnum)reader.GetInt16(4)
                             };
                             filteredOrders.Add(order);
                         }
@@ -263,7 +265,13 @@ namespace ConsoleApplication1.Classes
             }
         }
 
-        public void BulkDeleteOrders(List<int> orderIds)
+        public void BulkDeleteOrders(
+            List<int> orderIds,
+            int? createDate = null,
+            int? updatedDate = null, 
+            OrderStatusEnum? filterStatus = null, 
+            int? filterProductId = null
+            )
         {
             if (orderIds == null || orderIds.Count == 0)
             {
@@ -276,13 +284,36 @@ namespace ConsoleApplication1.Classes
 
                 var cmd = connection.CreateCommand();
                 cmd.CommandText = "DELETE FROM public.\"Order\" WHERE \"Id\" = ANY(@orderIds)";
-
                 cmd.Parameters.AddWithValue("@orderIds", orderIds.ToArray());
 
-                cmd.ExecuteNonQuery();
+                if (createDate.HasValue)
+                {
+                    cmd.CommandText += " AND \"CreateDate\" = @createDate";
+                    cmd.Parameters.AddWithValue("@createDate", createDate);
+                }
 
+                if (updatedDate.HasValue)
+                {
+                    cmd.CommandText += " AND \"UpdateDate\" = @updatedDate";
+                    cmd.Parameters.AddWithValue("@updatedDate", updatedDate);
+                }
+
+                if (filterStatus.HasValue)
+                {
+                    cmd.CommandText += " AND \"Status\" = @filterStatus";
+                    cmd.Parameters.AddWithValue("@filterStatus", (int)filterStatus);
+                }
+
+                if (filterProductId.HasValue)
+                {
+                    cmd.CommandText += " AND \"ProductId\" = @filterProductId";
+                    cmd.Parameters.AddWithValue("@filterProductId", filterProductId);
+                }
+                
+                cmd.Parameters.AddWithValue("@orderIds", orderIds.ToArray());
+                cmd.ExecuteNonQuery();
                 connection.Close();
             }        
-        }    
+        }
     }
 }

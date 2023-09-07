@@ -92,6 +92,7 @@
     <ItemGroup>
         <Compile Include="Classes\Order.cs" />
         <Compile Include="Classes\Manager.cs" />
+        <Compile Include="Classes\OrderStatusEnum.cs" />
         <Compile Include="Classes\Product.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />

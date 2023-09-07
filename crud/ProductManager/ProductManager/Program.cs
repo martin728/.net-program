@@ -79,7 +79,7 @@ namespace ConsoleApplication1
                 Console.WriteLine($"Product ID: {product.Id}, Name: {product.Name}");
             }
 
-            List<Order> filteredOrders = orderManager.GetOrdersByFilter(filterYear: 2023, filterMonth: 8, filterStatus: "InProgress", filterProductId: 1);
+            List<Order> filteredOrders = orderManager.GetOrdersByFilter(createDate: 2023, updatedDate: 8, filterStatus: OrderStatusEnum.Arrived, filterProductId: 1);
             Console.WriteLine("Filtered Orders:");
             foreach (var order in filteredOrders)
             {

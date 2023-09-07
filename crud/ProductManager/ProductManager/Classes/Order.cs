@@ -8,6 +8,6 @@ namespace ConsoleApplication1.Classes
         public DateTime CreateDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public int ProductId { get; set; }
-        public int Status { get; set; }
+        public OrderStatusEnum Status { get; set; }
     }
 }
