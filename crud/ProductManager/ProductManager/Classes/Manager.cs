@@ -209,7 +209,7 @@ namespace ConsoleApplication1.Classes
 
         public List<Order> GetOrdersByFilter(int filterYear, int filterMonth, string filterStatus, int filterProductId)
         {
-            var filteredOrders = new List<Order>();
+            var filteredOrders = _orders;
 
             using (var connection = new NpgsqlConnection(_connectionString))
             {
