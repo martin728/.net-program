@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductManager", "ProductManager\ProductManager.csproj", "{58E7D9BB-29FD-4B1B-9243-9FDE820A3988}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductManagerTests", "ProductManagerTests\ProductManagerTests.csproj", "{FE775D45-92F3-418C-AFF8-D8CE51458698}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{58E7D9BB-29FD-4B1B-9243-9FDE820A3988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58E7D9BB-29FD-4B1B-9243-9FDE820A3988}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58E7D9BB-29FD-4B1B-9243-9FDE820A3988}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58E7D9BB-29FD-4B1B-9243-9FDE820A3988}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE775D45-92F3-418C-AFF8-D8CE51458698}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE775D45-92F3-418C-AFF8-D8CE51458698}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE775D45-92F3-418C-AFF8-D8CE51458698}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE775D45-92F3-418C-AFF8-D8CE51458698}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
